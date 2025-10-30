@@ -1,1 +1,30 @@
-# Finance
+# finance — Ticker Analysis System
+
+This repository contains a small ticker analysis system that computes:
+- RSI (default 14) and short-term RSI (9)
+- WaveTrend Oscillator
+- Commodity Channel Index (CCI)
+- Average Directional Index (ADX)
+- A composite Feature Index combining the above indicators
+
+Requirements
+- Python 3.9+
+- pandas, numpy
+
+Quickstart
+1. Install dependencies:
+   pip install -r requirements.txt
+
+2. Analyze a CSV (columns: date, open, high, low, close, volume):
+   python scripts/analyze_ticker.py path/to/ticker.csv
+
+Files
+- src/finance/indicators.py — implementations of the indicators
+- src/finance/feature_index.py — builds the combined feature index
+- scripts/analyze_ticker.py — simple CLI to run the analysis
+- requirements.txt — pip requirements
+- tests/test_indicators.py — basic unit tests
+
+Interpretation
+- The feature index is normalized roughly between -1 and 1 (depending on input distributions).
+- Higher positive values imply bullish alignment across indicators; negative values imply bearish alignment.
