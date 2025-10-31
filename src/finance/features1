@@ -1,0 +1,16 @@
+# Simple feature registry mapping feature name -> module/function metadata.
+# If your repo already has a registry, merge the "vwap_rolling" entry into it.
+
+FEATURES = {
+    "vwap_rolling": {
+        "module": "features.technical_indicators",
+        "function": "vwap",
+        "description": "Rolling-window VWAP (uses close price and volume).",
+        "params": {
+            "window": "int (lookback in bars)",
+            "price_col": "str, default 'close'",
+            "vol_col": "str, default 'volume'",
+            "min_periods": "int or None, default None"
+        }
+    }
+}
