@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+from features.technical_indicators import vwap
+
+
+def test_vwap_basic_window_3():
+    df = pd.DataFrame(
+        {
+            "close": [10, 12, 11, 13, 14],
+            "volume": [100, 200, 0, 50, 150],
+        }
+    )
+
+    # window=3 -> first two values are NaN (min_periods defaults to window)
+    result = vwap(df, window=3)
+
+    expected = pd.Series(
+        [np.nan, np.nan, (10*100 + 12*200 + 11*0) / (100 + 200 + 0), (12*200 + 11*0 + 13*50) / (200 + 0 + 50), (11*0 + 13*50 + 14*150) / (0 + 50 + 150)],
+        name="vwap",
+    )
+
+    # allow small float tolerance
+    pd.testing.assert_series_equal(result, expected, check_exact=False, rtol=1e-9, atol=1e-12)
+
+
+def test_vwap_zero_volume_all_nan():
+    df = pd.DataFrame({"close": [10, 11, 12], "volume": [0, 0, 0]})
+    result = vwap(df, window=2, min_periods=1)
+    assert result.isna().all()
